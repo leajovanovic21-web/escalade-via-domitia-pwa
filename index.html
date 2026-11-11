@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3f7ef">
+  <meta name="description" content="Gestion des cordées, performances et résultats du challenge Escalade Via Domitia.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>ESCALADE VIA DOMITIA</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">⛰</div>
+    <div><div class="eyebrow">CHALLENGE SCOLAIRE</div><h1>ESCALADE <span>VIA DOMITIA</span></h1></div>
+    <button id="installBtn" class="install-btn" hidden>Installer</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">BIENVENUE SUR LE MUR</p>
+        <h2>À chacun sa voie.<br><em>À chaque cordée son sommet.</em></h2>
+        <p class="hero-sub">Gérez les équipes, saisissez les réussites et suivez le classement en direct.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><span class="sun"></span><span class="peak peak-back"></span><span class="peak peak-front"></span><span class="climber">●</span></div>
+    </section>
+
+    <nav class="tabs" aria-label="Navigation principale">
+      <button class="tab active" data-view="teams"><span>🧗</span><b>Cordées</b></button>
+      <button class="tab" data-view="performances"><span>📝</span><b>Performances</b></button>
+      <button class="tab" data-view="results"><span>🏆</span><b>Résultats</b></button>
+    </nav>
+
+    <section id="view-teams" class="view active">
+      <div class="section-heading"><div><p class="eyebrow">ÉQUIPES</p><h2>Rentrer les cordées</h2></div><span class="section-icon">🧗‍♀️</span></div>
+      <div class="panel">
+        <label for="teamChallenge">Challenge</label>
+        <select id="teamChallenge"><option value="benjamin">Challenge Benjamin (6e, 5e)</option><option value="minime">Challenge Minime (4e, 3e)</option></select>
+        <div class="form-divider"></div>
+        <label for="teamName">Nom de la cordée</label>
+        <input id="teamName" maxlength="40" placeholder="Ex. Les Chamois">
+        <p class="helper">Une cordée peut compter de 1 à 3 grimpeurs.</p>
+        <div id="climberInputs" class="climber-inputs">
+          <div class="climber-field"><label for="climber1">Grimpeur 1</label><input id="climber1" maxlength="50" placeholder="Prénom et nom"></div>
+          <div class="climber-field"><label for="climber2">Grimpeur 2 <small>(facultatif)</small></label><input id="climber2" maxlength="50" placeholder="Prénom et nom"></div>
+          <div class="climber-field"><label for="climber3">Grimpeur 3 <small>(facultatif)</small></label><input id="climber3" maxlength="50" placeholder="Prénom et nom"></div>
+        </div>
+        <button id="addTeamBtn" class="primary-btn">＋ Ajouter cette cordée</button>
+      </div>
+      <div class="list-heading"><h3>Cordées enregistrées</h3><span id="teamCount" class="count-pill">0</span></div>
+      <div id="teamsList" class="stack-list"></div>
+    </section>
+
+    <section id="view-performances" class="view">
+      <div class="section-heading"><div><p class="eyebrow">SAISIE DES RÉUSSITES</p><h2>Ajouter une performance</h2></div><span class="section-icon">📝</span></div>
+      <div class="panel">
+        <label for="perfChallenge">Challenge</label>
+        <select id="perfChallenge"><option value="benjamin">Challenge Benjamin (6e, 5e)</option><option value="minime">Challenge Minime (4e, 3e)</option></select>
+        <label for="perfTeam">Cordée</label><select id="perfTeam"><option value="">Choisir une cordée</option></select>
+        <label for="perfClimber">Grimpeur</label><select id="perfClimber"><option value="">Choisir un grimpeur</option></select>
+        <div class="two-cols">
+          <div><label for="routeNumber">Numéro de voie</label><input id="routeNumber" inputmode="numeric" placeholder="Ex. 5" maxlength="6"></div>
+          <div><label for="routeGrade">Cotation</label><select id="routeGrade"></select></div>
+        </div>
+        <label>Type de réalisation</label>
+        <div class="choice-row">
+          <label class="choice"><input type="radio" name="climbType" value="moulinette" checked><span>En moulinette</span></label>
+          <label class="choice"><input type="radio" name="climbType" value="tete"><span>En tête ×2</span></label>
+        </div>
+        <div id="scorePreview" class="score-preview"><span>Points de cette voie</span><strong>—</strong></div>
+        <button id="addPerfBtn" class="primary-btn">＋ Enregistrer la performance</button>
+        <p class="helper">Le score et les bonus sont recalculés automatiquement après chaque saisie.</p>
+      </div>
+      <div class="list-heading"><h3>Dernières performances</h3><span id="perfCount" class="count-pill">0</span></div>
+      <div id="performancesList" class="stack-list"></div>
+    </section>
+
+    <section id="view-results" class="view">
+      <div class="section-heading"><div><p class="eyebrow">CLASSEMENT EN DIRECT</p><h2>Résultats</h2></div><span class="section-icon">🏆</span></div>
+      <div class="panel compact-panel">
+        <label for="resultChallenge">Afficher le classement</label>
+        <select id="resultChallenge"><option value="benjamin">Challenge Benjamin (6e, 5e)</option><option value="minime">Challenge Minime (4e, 3e)</option></select>
+      </div>
+      <div id="resultsSummary" class="results-summary"></div>
+      <div id="resultsList" class="results-list"></div>
+      <div class="export-row">
+        <button id="exportBtn" class="secondary-btn">⇩ Sauvegarder les données</button>
+        <button id="printBtn" class="secondary-btn">Imprimer le classement</button>
+      </div>
+      <div class="panel import-panel">
+        <h3>Restaurer une sauvegarde</h3>
+        <p class="helper">Choisissez un fichier JSON exporté depuis l'application. Les données actuelles seront remplacées.</p>
+        <input id="importFile" type="file" accept="application/json,.json">
+        <button id="importBtn" class="secondary-btn">Importer la sauvegarde</button>
+      </div>
+    </section>
+
+    <section class="local-note"><span>✓</span><div><strong>Vos données restent sur cet appareil.</strong><p>La sauvegarde est automatique. Pensez à exporter régulièrement une copie de sécurité.</p></div></section>
+  </main>
+  <footer>ESCALADE VIA DOMITIA <span>•</span> Gravir ensemble, réussir ensemble</footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
