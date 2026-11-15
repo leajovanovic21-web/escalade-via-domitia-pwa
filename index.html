@@ -102,6 +102,15 @@
   </main>
   <footer>ESCALADE VIA DOMITIA <span>•</span> Gravir ensemble, réussir ensemble</footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js"></script>
+   <script src="app.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js");
+      });
+    }
+  </script>
+
 </body>
 </html>
